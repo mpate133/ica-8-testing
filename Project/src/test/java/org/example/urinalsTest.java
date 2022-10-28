@@ -14,7 +14,8 @@ class urinalsTest {
 
     @Test
     void isValidString(){
-        Assertions.assertEquals(true, operation.isValidString(new String("Manan Patel")));
+        Assertions.assertEquals(false, operation.isValidString(new String("Manan Patel")));
+
         System.out.println("====== Manan Patel == TEST ONE EXECUTED =======");
     }
 
