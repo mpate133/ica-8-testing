@@ -24,7 +24,7 @@ class urinalsTest {
 
     @Test
     void countMaximumAvailableUrinals(){
-        assertEquals(2, operation.countMaximumAvailableUrinals("10001"));
-        System.out.println("======= '10001' ===== false case written");
+        assertEquals(1, operation.countMaximumAvailableUrinals("10001"));
+        System.out.println("======= '10001' ===== false case corrected");
     }
 }
