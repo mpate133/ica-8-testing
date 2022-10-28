@@ -17,6 +17,7 @@ public class urinals {
         System.out.println("0 for Keyboard Input");
         System.out.println("1 for File Input");
 
+
         int choice = sc.nextInt();
 
         if(choice == 1 || choice == 0){
