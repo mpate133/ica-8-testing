@@ -1,44 +1,81 @@
 package org.example;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class operationsForUrinals {
 
     static Scanner sc = new Scanner(System.in);
-    public static void getString(int choice) throws FileNotFoundException {
-        if(choice == 0){
+    public static int personChoice;
+
+    public static void getString(int choice) throws IOException {
+        personChoice = choice;
+        if (choice == 0) {
             System.out.println("Enter  the string : ");
             String str = sc.next();
-            if(isValidString(str)){
+            if (isValidString(str)) {
                 countMaximumAvailableUrinals(str);
+            } else {
+                System.out.println("-1");
             }
-            else{
-                System.out.println("Invalid string entered");
-            }
-        }else{
+        } else {
             readFromFile();
         }
     }
 
-    public static boolean isValidString(String str){
-        boolean isValidInput = true;
+    public static boolean isValidString(String str) {
+        Map<Character, Integer> map = new HashMap<>();
         char[] chars = str.toCharArray();
-        System.out.println ("Not yet implemented");
-        return isValidInput;
+        for(char c : chars){
+            if(!map.containsKey(c)){
+                map.put(c,0);
+            }
+            map.put(c, map.get(c) + 1);
+        }
+        if(map.size() == 2 && map.containsKey(0) && map.containsKey(1) ){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
-    public static void readFromFile() throws FileNotFoundException {
-        File file = new File("Project/src/main/resources/urinal.dat");
-        Scanner sc = new Scanner(file);
+    public static void readFromFile() throws IOException {
+        File file = new File("src\\main\\resources\\urinal.dat");
+        BufferedReader br = new BufferedReader(new FileReader(file));
 
-        while (sc.hasNextLine()) {
-            countMaximumAvailableUrinals(sc.nextLine());
+        String st;
+        while ((st = br.readLine()) != null){
+            if (isValidString(st)) {
+                countMaximumAvailableUrinals(st);
+            } else {
+                System.out.println("-1");
+            }
         }
     }
 
     public static void countMaximumAvailableUrinals(String str){
+        int result = -1;
+        boolean flag = true;
+        char[] chars = str.toCharArray();
+        for(int i=0; i<chars.length-1; i++){
+            if((chars[i] != '1' && chars[i] != '0') || (chars[i] == '1' && chars[i] == chars[i+1])){
+                flag = false;
+                break;
+            }
+        }
 
+        if(flag == true){
+            // code for counting maximun number of urinals
+        }
+
+        if(personChoice == 0){
+            System.out.println(result);
+        }
+        else{
+          // write in the file
+        }
     }
 }
