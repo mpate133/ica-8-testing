@@ -31,7 +31,7 @@ class urinalsTest {
 
     @Test
     void countMaximumAvailableUrinals(){
-        assertEquals(1, operation.countMaximumAvailableUrinals("10001"));
+        assertEquals(1, operationsForUrinals.countMaximumAvailableUrinals("10001"));
         System.out.println("======= '10001' ===== Fist test case for counting urinals executed");
         assertEquals(4, operation.countMaximumAvailableUrinals("1000100001000001"));
         assertEquals(0, operation.countMaximumAvailableUrinals("010101"));

@@ -1,8 +1,6 @@
 package org.example;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class operationsForUrinals {
@@ -14,7 +12,7 @@ public class operationsForUrinals {
         personChoice = choice;
         if (choice == 0) {
             System.out.println("Enter the string OR -1 for exit: ");
-            String str = "0";
+            String str;
             do{
                 str = sc.next();
                 if(!str.equals("-1")) {
@@ -47,23 +45,31 @@ public class operationsForUrinals {
     }
 
     public static void readFromFile() throws IOException {
-        String pathName = setPathNameToWriteFile();
         File file = new File("src\\main\\resources\\urinal.dat");
         BufferedReader br = new BufferedReader(new FileReader(file));
-        int res;
+        String pathName = "";
         String st;
-        FileWriter myWriter = new FileWriter(pathName, true);
-        while ((st = br.readLine()) != null){
-            res = -1;
-            if (isValidString(st)) {
-                res = countMaximumAvailableUrinals(st);
-            }
-
-            System.out.println(res);
-            myWriter.write(res + "\n");
+        if((st = br.readLine()) == null){
+            System.out.println("Input file is empty");
         }
-        myWriter.close();
-        System.out.println("Successfully wrote to the file.");
+        else{
+            pathName = setPathNameToWriteFile();
+            int res;
+
+            FileWriter myWriter = new FileWriter(pathName, true);
+            while ((st = br.readLine()) != null){
+                res = -1;
+                if (isValidString(st)) {
+                    res = countMaximumAvailableUrinals(st);
+                }
+
+                System.out.println(res);
+                myWriter.write(res + "\n");
+            }
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        }
+
     }
 
     public static String setPathNameToWriteFile() throws IOException {
@@ -91,7 +97,7 @@ public class operationsForUrinals {
 
 
     public static int countMaximumAvailableUrinals(String str){
-        int result = -1;
+        int result;
         char[] chars = str.toCharArray();
         int charArrayLength = chars.length;
 
@@ -99,6 +105,11 @@ public class operationsForUrinals {
         int changesValues = 0;
         for(int i=0; i<charArrayLength; i++){
             if(i == 0) {
+                /*
+                 * checking for the first character of the string
+                 * if the length is 1 only then, we do the operations and break the loop
+                 * else we check if the first character is 0 or not
+                 */
                 if(charArrayLength== 1){
                     result = 1 - Character.getNumericValue(chars[0]);
                     return result;
@@ -109,12 +120,19 @@ public class operationsForUrinals {
                 }
             }
             else if(i == charArrayLength-1) {
+                /*
+                 * checking for the last and second last character
+                 */
                 if (chars[i - 1] == '0' && chars[i] == '0') {
                     chars[i] = '1';
                     changesValues += 1;
                 }
             }
             else {
+                /*
+                 * checking the rest of the characters
+                 * by checking its previous and next characters
+                 */
                 if (chars[i - 1] == '0' && chars[i] == '0' && chars[i + 1] == '0') {
                     chars[i] = '1';
                     changesValues += 1;
